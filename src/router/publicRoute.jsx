@@ -1,3 +1,4 @@
+import Forgot from '../pages/auth/Forgot';
 import Register from '../pages/auth/Register';
 import Login from '../pages/auth/login';
 
@@ -12,6 +13,10 @@ const publicRouter = [
   {
     path: '/register',
     element: <Register />,
+  },
+  {
+    path: '/forgot',
+    element: <Forgot />,
   },
 ];
 

@@ -1,3 +1,7 @@
+# api
+package-lock.json
+node_modules
+
 # Logs
 logs
 *.log
@@ -13,6 +17,7 @@ dist-ssr
 *.local
 .env
 package-lock.json
+.eslintrc.cjs
 
 # Editor directories and files
 .vscode/*

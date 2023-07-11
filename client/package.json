@@ -11,7 +11,9 @@
     "push": "git add . && git commit -m \"dashboard few pages done\" && git push"
   },
   "dependencies": {
+    "@rakan/bootstrap4rtl": "^2.0.0",
     "axios": "^1.4.0",
+    "datatables.net-dt": "^1.13.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",

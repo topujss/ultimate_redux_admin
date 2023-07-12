@@ -7,7 +7,7 @@
     "server": "nodemon api/server.js",
     "client": "npm run dev --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "push": "git add . && git commit -m \"$(date)\" && git push"
+    "push": "git add . && git commit -m \"login done with access and refresh token\" && git push"
   },
   "keywords": [],
   "author": "",

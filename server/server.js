@@ -31,5 +31,5 @@ app.use(errorHandler);
 // app listen
 app.listen(PORT, () => {
   mongoDBConnect();
-  console.log(`server running: ${PORT}`.random);
+  console.log(`server running: http://localhost:${PORT}`.random);
 });

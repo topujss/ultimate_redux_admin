@@ -8,10 +8,6 @@ const { sign, verify } = require('jsonwebtoken');
  */
 
 /**
- * @error you must check!
- */
-
-/**
  * @function userLogin
  * @desc user login feature
  * @route POST api/v1/auth/login
@@ -49,7 +45,7 @@ const userLogin = asyncHandler(async (req, res) => {
   );
   res.cookie('refresh_token', refreshToken);
 
-  res.status(201).json({ token, refreshToken, userData: userExist });
+  res.status(201).json({ token, userData: userExist });
 });
 
 // const userLogin = asyncHandler(async (req, res) => {
@@ -151,18 +147,23 @@ const refreshToken = (req, res) => {
  * @route POST /logout
  * @access public
  */
+// const userLogout = (req, res) => {
+//   const isCookies = req.cookies;
+
+//   !isCookies?.refresh_token ? res.status(401).json({ message: 'Invalid logout request' }) : res.status(200);
+
+//   res
+//     .clearCookie('refresh_token', {
+//       httpOnly: true,
+//       secure: process.env.APP_ENV === 'development' ? false : true,
+//     })
+//     .status(200)
+//     .json({ message: 'Logged out' });
+// };
+
 const userLogout = (req, res) => {
-  const isCookies = req.cookies;
-
-  !isCookies?.refresh_token ? res.status(401).json({ message: 'Invalid logout request' }) : res.status(200);
-
-  res
-    .clearCookie('refresh_token', {
-      httpOnly: true,
-      secure: process.env.APP_ENV === 'development' ? false : true,
-    })
-    .status(200)
-    .json({ message: 'Logged out' });
+  res.clearCookie('access_token');
+  res.status(200).json({message: 'logOut successful'})
 };
 
 module.exports = {

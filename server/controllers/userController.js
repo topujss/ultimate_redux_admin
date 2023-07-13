@@ -3,8 +3,9 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 
 /**
+ * @function getAllUser
  * @desc get all users data
- * @route GET /users
+ * @route GET api/v1/user
  * @access PUBLIC
  */
 const getAllUser = asyncHandler(async (req, res) => {
@@ -14,7 +15,9 @@ const getAllUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'No user found' });
   }
 
-  res.json(users);
+  console.log(req.me);
+
+  res.json({ users });
 });
 
 /**

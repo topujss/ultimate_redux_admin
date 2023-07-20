@@ -3,9 +3,40 @@ import logoSmall from '../assets/img/logo-small.png';
 import docLogo from '../assets/img/doctors/doctor-thumb-01.jpg';
 
 import { FaSearch } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../features/auth/authApiSlice';
+import { useEffect } from 'react';
+import { setMsgEmpty } from '../features/auth/authSlice';
+import { toastMsg } from '../utils/toastAlert.js';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userData, message, error } = useSelector((state) => state.authStore);
+
+  // logout a user
+  const handleUserLogout = (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+  };
+
+  useEffect(() => {
+    if (error) {
+      toastMsg(error);
+      dispatch(setMsgEmpty());
+    }
+    if (message) {
+      toastMsg(message);
+      dispatch(setMsgEmpty());
+    }
+    if (!userData) {
+      navigate('/login');
+    }
+  }, [error, message, userData, dispatch, navigate]);
+
+  
+  
   return (
     <header className="header">
       {/* <!-- Logo --> */}
@@ -38,65 +69,76 @@ const Header = () => {
       </a>
 
       {/* <!-- Header Right Menu --> */}
-				<ul class="nav user-menu">
+      <ul className="nav user-menu">
+        {/* <!-- Notifications --> */}
+        <li className="nav-item dropdown noti-dropdown">
+          <a href="#" className="dropdown-toggle nav-link" data-toggle="dropdown">
+            <i className="fe fe-bell"></i> <span className="badge badge-pill">3</span>
+          </a>
+          <div className="dropdown-menu notifications">
+            <div className="topnav-dropdown-header">
+              <span className="notification-title">Notifications</span>
+              <Link to="#" className="clear-noti">
+                {' '}
+                Clear All{' '}
+              </Link>
+            </div>
+            <div className="noti-content">
+              <ul className="notification-list">
+                <li className="notification-message">
+                  <a href="#">
+                    <div className="media">
+                      <span className="avatar avatar-sm">
+                        <img className="avatar-img rounded-circle" alt="User Image" src={docLogo} />
+                      </span>
+                      <div className="media-body">
+                        <p className="noti-details">
+                          <span className="noti-title">Dr. Ruby Perrin</span> Schedule{' '}
+                          <span className="noti-title">her appointment</span>
+                        </p>
+                        <p className="noti-time">
+                          <span className="notification-time">4 mins ago</span>
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="topnav-dropdown-footer">
+              <a href="#">View all Notifications</a>
+            </div>
+          </div>
+        </li>
+        {/* <!-- /Notifications --> */}
 
-					{/* <!-- Notifications --> */}
-					<li class="nav-item dropdown noti-dropdown">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Notifications</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="#">
-											<div class="media">
-												<span class="avatar avatar-sm">
-													<img class="avatar-img rounded-circle" alt="User Image" src={docLogo}/>
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Dr. Ruby Perrin</span> Schedule <span class="noti-title">her appointment</span></p>
-													<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="#">View all Notifications</a>
-							</div>
-						</div>
-					</li>
-					{/* <!-- /Notifications --> */}
-					
-					{/* <!-- User Menu --> */}
-					<li class="nav-item dropdown has-arrow">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<span class="user-img"><img class="rounded-circle" src={docLogo} width="31" alt="Ryan Taylor"/></span>
-						</a>
-						<div class="dropdown-menu">
-							<div class="user-header">
-								<div class="avatar avatar-sm">
-									<img src={docLogo} alt="User Image" class="avatar-img rounded-circle"/>
-								</div>
-								<div class="user-text">
-									<h6>Ryan Taylor</h6>
-									<p class="text-muted mb-0">Administrator</p>
-								</div>
-							</div>
-							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item" href="settings.html">Settings</a>
-							<a class="dropdown-item" href="login.html">Logout</a>
-						</div>
-					</li>
-					{/* <!-- /User Menu --> */}
-					
-				</ul>
+        {/* <!-- User Menu --> */}
+        <li className="nav-item dropdown has-arrow">
+          <a href="#" className="dropdown-toggle nav-link" data-toggle="dropdown">
+            <span className="user-img">
+              <img className="rounded-circle" src={docLogo} width="31" alt="Ryan Taylor" />
+            </span>
+          </a>
+          <div className="dropdown-menu">
+            <div className="user-header">
+              <div className="avatar avatar-sm">
+                <img src={docLogo} alt="User Image" className="avatar-img rounded-circle" />
+              </div>
+              <div className="user-text">
+                <h6>Ryan Taylor</h6>
+                <p className="text-muted mb-0">Administrator</p>
+              </div>
+            </div>
+            <Link className="dropdown-item" to={'/'}>
+              My Profile
+            </Link>
+            <a href="##" onClick={handleUserLogout} className="dropdown-item">
+              Logout
+            </a>
+          </div>
+        </li>
+        {/* <!-- /User Menu --> */}
+      </ul>
     </header>
   );
 };

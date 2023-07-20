@@ -16,14 +16,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  })
+);
 
 // environment vars
 const PORT = process.env.PORT || 5050;
 
 // routing
 app.use('/api/v1/user', userRoute);
-app.use("/api/v1/auth", authRoute);
+app.use('/api/v1/auth', authRoute);
 
 // error handler
 app.use(errorHandler);

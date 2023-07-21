@@ -15,7 +15,7 @@ const User = () => {
 
   return (
     <>
-      <Welcome name="ahmed" page="Users" />
+      <Welcome page="Users" />
       <ModalMain target={`userModal`} title="Add a new user">
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic perferendis provident quisquam animi esse

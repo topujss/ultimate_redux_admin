@@ -1,19 +1,18 @@
 import logo from '../assets/img/logo.png';
 import logoSmall from '../assets/img/logo-small.png';
 import docLogo from '../assets/img/doctors/doctor-thumb-01.jpg';
+const avatar = `https://img.freepik.com/free-icon/user_318-159711.jpg`;
 
 import { FaSearch } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { logoutUser } from '../features/auth/authApiSlice';
-import { useEffect } from 'react';
-import { setMsgEmpty } from '../features/auth/authSlice';
-import { toastMsg } from '../utils/toastAlert.js';
+import useAuthUser from '../hooks/useAuthUser';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { userData, message, error } = useSelector((state) => state.authStore);
+
+  const { userData } = useAuthUser();
 
   // logout a user
   const handleUserLogout = (e) => {
@@ -21,22 +20,6 @@ const Header = () => {
     dispatch(logoutUser());
   };
 
-  useEffect(() => {
-    if (error) {
-      toastMsg(error);
-      dispatch(setMsgEmpty());
-    }
-    if (message) {
-      toastMsg(message);
-      dispatch(setMsgEmpty());
-    }
-    if (!userData) {
-      navigate('/login');
-    }
-  }, [error, message, userData, dispatch, navigate]);
-
-  
-  
   return (
     <header className="header">
       {/* <!-- Logo --> */}
@@ -116,17 +99,26 @@ const Header = () => {
         <li className="nav-item dropdown has-arrow">
           <a href="#" className="dropdown-toggle nav-link" data-toggle="dropdown">
             <span className="user-img">
-              <img className="rounded-circle" src={docLogo} width="31" alt="Ryan Taylor" />
+              <img
+                className="rounded-circle"
+                src={userData?.photo ? userData?.photo : avatar}
+                width="31"
+                alt={userData?.name}
+              />
             </span>
           </a>
           <div className="dropdown-menu">
             <div className="user-header">
               <div className="avatar avatar-sm">
-                <img src={docLogo} alt="User Image" className="avatar-img rounded-circle" />
+                <img
+                  src={userData?.photo ? userData?.photo : avatar}
+                  alt={userData?.name}
+                  className="avatar-img rounded-circle"
+                />
               </div>
               <div className="user-text">
-                <h6>Ryan Taylor</h6>
-                <p className="text-muted mb-0">Administrator</p>
+                <h6>{userData?.name}</h6>
+                <p className="text-muted mb-0">{userData?.role}</p>
               </div>
             </div>
             <Link className="dropdown-item" to={'/'}>

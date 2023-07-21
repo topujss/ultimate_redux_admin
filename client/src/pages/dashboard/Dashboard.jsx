@@ -3,7 +3,7 @@ import Welcome from '../../components/Welcome';
 const Dashboard = () => {
   return (
     <>
-      <Welcome name="ahmed" page="Dashboard" />
+      <Welcome page="Dashboard" />
       <div className="row">
         <div className="col-xl-3 col-sm-6 col-12">
           <div className="card">

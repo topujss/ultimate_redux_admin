@@ -1,17 +1,22 @@
+import { FaUser, FaUserCog } from 'react-icons/fa';
+import { TbHomeDollar } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 const menuItems = [
   {
     name: 'Dashboard',
     link: '/',
-    iconClass: 'home',
-    linkClass: true,
+    iconClass: <TbHomeDollar />,
   },
   {
     name: 'Users',
     link: '/user',
-    iconClass: 'user',
-    linkClass: false,
+    iconClass: <FaUser />,
+  },
+  {
+    name: 'Profile',
+    link: '/profile',
+    iconClass: <FaUserCog />,
   },
 ];
 
@@ -24,11 +29,12 @@ const Sidbar = () => {
             <li className="menu-title">
               <span>Main</span>
             </li>
-            {menuItems.map((item, index) => {
+            {menuItems.map(({ name, link, iconClass }, index) => {
               return (
-                <li className={item.linkClass === true ? 'active' : ''} key={index}>
-                  <Link to={item.link}>
-                    <i className={`fe fe-${item.iconClass}`}></i> <span>{item.name}</span>
+                <li className={name === 'Dashboard' ? 'active' : ''} key={index}>
+                  <Link to={link}>
+                    <i className="mb-1">{iconClass}</i>
+                    <span>{name}</span>
                   </Link>
                 </li>
               );
